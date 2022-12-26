@@ -41,7 +41,7 @@ export default function Login() {
     e.preventDefault();
   };
   return (
-    <div className="flex flex-col items-center m-auto">
+    <div className="flex flex-col items-center">
       <p className="my-12 text-7xl font-bold text-gray-800">000</p>
       <p className="text-gray-700">000은 아이디어 공유플랫폼입니다.</p>
       <p className="text-gray-400 py-8">로그인 정보를 입력해주세요</p>

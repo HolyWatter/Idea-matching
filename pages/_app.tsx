@@ -1,10 +1,14 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
+import Nav from "../components/nav/Nav";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className="max-w-7xl min-w-5xl">
-      <Component {...pageProps} />
-    </div>
+    <>
+      <Nav />
+      <div className="min-w-5xl">
+        <Component {...pageProps} />
+      </div>
+    </>
   );
 }
