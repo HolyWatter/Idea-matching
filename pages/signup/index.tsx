@@ -93,9 +93,7 @@ export default function SignUp() {
             />
           </div>
         </div>
-        <button
-          className="w-96 h-12 mt-12 rounded-full border text-white bg-lime-600 shadow-md "
-        >
+        <button className="w-96 h-12 mt-12 rounded-full border text-white bg-origin shadow-md ">
           회원가입
         </button>
       </form>

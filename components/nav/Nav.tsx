@@ -83,7 +83,7 @@ export default function Nav() {
             </button>
             <button
               onClick={clickSignUp}
-              className="w-20 h-10 rounded-md text-white bg-lime-600 border shadow-md"
+              className="w-20 h-10 rounded-md text-white bg-origin border shadow-md"
             >
               회원가입
             </button>

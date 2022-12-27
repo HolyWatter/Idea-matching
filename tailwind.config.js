@@ -7,6 +7,11 @@ module.exports = {
     //경로
   ],
   theme: {
+    extend: {
+      colors: {
+        origin: "#ECA985",
+      },
+    },
     screens: {
       "2xl-m": { max: "1535px" },
       "xl-m": { max: "1279px" },
