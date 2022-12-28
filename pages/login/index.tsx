@@ -70,7 +70,7 @@ export default function Login() {
         </div>
         <button
           onClick={clickSubmit}
-          className="w-96 h-12 mt-12 rounded-full border text-white bg-lime-600 shadow-md "
+          className="w-96 h-12 mt-12 rounded-full border text-white bg-origin shadow-md "
         >
           로그인
         </button>
