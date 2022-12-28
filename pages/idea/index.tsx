@@ -1,8 +1,35 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useRef } from "react";
 import { Input } from "../../components/BtnInput/Input";
+
+interface File {
+  name: string;
+  lastModified: number;
+  lastModifiedDate: object;
+  size: number;
+  type: string;
+  webkitRelativePath: string;
+}
+
+interface Files {
+  File: File;
+}
+
+interface IdeaInfo {
+  title: string;
+  category: string;
+  content: string;
+}
 
 export default function Idea() {
   const [hasFile, setHasFile] = useState<boolean>(false);
+  const [fileList, setFileList] = useState<Files[] | null>();
+  const [ideaInfo, setIdeaInfo] = useState<IdeaInfo>({
+    title: "",
+    category: "개발",
+    content: "",
+  });
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   const selectHasFile = useCallback(() => {
     setHasFile(true);
   }, []);
@@ -10,9 +37,18 @@ export default function Idea() {
     setHasFile(false);
   }, []);
 
+  const uploadFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      // console.log(e.target.files)
+      setFileList(Object.values(e.target.files));
+    }
+  };
+
+  console.log(fileList);
+
   return (
     <div className="flex justify-center space-x-10 mt-6">
-      <div className="min-w-[400px] w-[400px] h-[400px] border shadow-lg rounded-md xl-m:hidden">
+      <div className="min-w-[400px] h-[380px] w-[400px] border shadow-lg rounded-md xl-m:hidden">
         <p className="font-semibold p-5">아이디어를 공유해보세요</p>
         <div className="border-t" />
         <div className="flex flex-col items-center w-full mt-10 text-sm space-y-6">
@@ -33,14 +69,37 @@ export default function Idea() {
           <p className="font-semibold p-5">아이디어 등록</p>
           <div className="border-t" />
           <div className="p-5 flex items-center">
-            <p className="w-[80px]">제목</p>
-            <Input />
+            <p className="w-[80px] text-center mr-10">제목</p>
+            <Input
+              onChange={() => {}}
+              name="title"
+              type="text"
+              placeholder="아이디어 이름을 입력하세요."
+              value={ideaInfo.title}
+            />
           </div>
           <div className="p-5 flex items-center">
-            <p className="w-[80px]">카테고리</p>
+            <p className="w-[80px] text-center mr-10">카테고리</p>
+            <button className="w-[200px] h-10 items-center px-2 flex justify-between border rounded-md">
+              <p>{ideaInfo.category}</p>
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
           </div>
           <div className="p-5 flex items-center">
-            <p className="w-[80px]">첨부파일</p>
+            <p className="w-[80px] text-center mr-10">첨부파일</p>
             <div className="space-x-4">
               <button
                 onClick={selectHasFile}
@@ -64,34 +123,51 @@ export default function Idea() {
               </button>
             </div>
           </div>
-          {hasFile && (
-            <div className="pl-5">
-              <label className="w-[95%] h-[100px] cursor-pointer text-gray-600 hover:border-origin hover:text-origin flex items-center justify-center border-2 border-dashed border-gray-300 rounded-md">
-                <svg
-                  className="h-12 w-12"
-                  stroke="currentColor"
-                  fill="none"
-                  viewBox="0 0 48 48"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+          <div className="flex items-center">
+            {hasFile && (
+              <div className="pl-5">
+                <label className="w-[80px] cursor-pointer text-gray-600 hover:border-origin hover:text-origin flex items-center justify-center border-2 border-gray-300 rounded-md mr-10">
+                  <div>업로드</div>
+                  <input
+                    ref={inputRef}
+                    onChange={uploadFiles}
+                    accept="image/*"
+                    className="hidden"
+                    multiple={true}
+                    type="file"
                   />
-                </svg>
-                <input
-                  accept="image/*"
-                  className="hidden"
-                  multiple={true}
-                  type="file"
-                />
-              </label>
-            </div>
-          )}
+                </label>
+              </div>
+            )}
+            {fileList && hasFile && (
+              <div className="w-[380px] px-3 py-3 border rounded-md">
+                {fileList?.map((item) => (
+                  <div
+                    key={item.name}
+                    className="flex justify-between items-center"
+                  >
+                    <p className="px-2">{item.name}</p>
+                    <svg
+                      className="w-3 h-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
           <div className="p-5 flex flex-col items-start space-y-4">
-            <p className="w-[80px]">내용</p>
+            <p className="w-[80px] text-center">내용</p>
             <textarea className="w-full h-[200px] border rounded-md shadow-md resize-none p-3" />
           </div>
         </div>

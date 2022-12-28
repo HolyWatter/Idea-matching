@@ -43,6 +43,10 @@ export default function SignUp() {
     postUser();
   };
 
+  const clickToLoginBtn = ()=>{
+    router.push('/login')
+  }
+
   return (
     <div className="flex flex-col items-center m-auto">
       <p className="my-12 text-7xl font-bold text-gray-800">000</p>
@@ -97,6 +101,12 @@ export default function SignUp() {
           회원가입
         </button>
       </form>
+      <div className="my-4 space-x-5 flex">
+        <p>이미 회원이신가요?</p>
+        <button onClick={clickToLoginBtn} className="text-blue-400 underline">
+          로그인
+        </button>
+      </div>
     </div>
   );
 }
