@@ -20,7 +20,22 @@ interface IdeaInfo {
   content: string;
 }
 
-export default function IdeaComponent() {
+interface Content {
+  text: string;
+  id: number;
+}
+
+interface Props {
+  asideText: string;
+  asideContentArr: Content[];
+  mainText: string;
+}
+
+export default function IdeaComponent({
+  asideText,
+  asideContentArr,
+  mainText,
+}: Props) {
   const [hasFile, setHasFile] = useState<boolean>(false);
   const [fileList, setFileList] = useState<Files[] | null>();
   const [ideaInfo, setIdeaInfo] = useState<IdeaInfo>({
@@ -47,26 +62,21 @@ export default function IdeaComponent() {
   console.log(fileList);
 
   return (
-    <div className="flex justify-center space-x-10 mt-6">
-      <div className="min-w-[400px] h-[380px] w-[400px] border shadow-lg rounded-md xl-m:hidden">
-        <p className="font-semibold p-5">아이디어를 공유해보세요</p>
+    <div className="flex justify-center space-x-10">
+      <div className="min-w-[400px] h-[380px] w-[400px] border shadow-lg rounded-md xl-m:hidden bg-white">
+        <p className="font-semibold p-5">{asideText}</p>
         <div className="border-t" />
         <div className="flex flex-col items-center w-full mt-10 text-sm space-y-6">
-          <p className="text-center w-[90%] py-2 border rounded-full">
-            아주 사소한 아이디어라도 좋아요
-          </p>
-          <p className="text-center w-[90%] py-2 border rounded-full">
-            아이디어를 공유하면 구현해 줄 수 있는 사람이 모여요
-          </p>
-          <p className="text-center w-[90%] py-2 border rounded-full">ㅈ</p>
-          <p className="text-center w-[90%] py-2 border rounded-full">
-            직접 팀원을 모집하고 기획에도 참여할 수 있어요
-          </p>
+          {asideContentArr.map((items) => (
+            <p key={items.id} className="text-center w-[90%] py-2 border rounded-full">
+              {items.text}
+            </p>
+          ))}
         </div>
       </div>
       <div className="space-y-10 min-w-[700px]">
-        <div className="flex flex-col w-[700px] pb-7 border shadow-lg rounded-md">
-          <p className="font-semibold p-5">아이디어 등록</p>
+        <div className="flex flex-col w-[700px] pb-7 border shadow-lg rounded-md bg-white">
+          <p className="font-semibold p-5">{mainText}</p>
           <div className="border-t" />
           <div className="p-5 flex items-center">
             <p className="w-[80px] text-center mr-10">제목</p>
@@ -168,7 +178,7 @@ export default function IdeaComponent() {
           </div>
           <div className="p-5 flex flex-col items-start space-y-4">
             <p className="w-[80px] text-center">내용</p>
-            <textarea className="w-full h-[200px] border rounded-md shadow-md resize-none p-3" />
+            <textarea className="focus:outline-none focus:border-origin focus:border-2 w-full h-[200px] border rounded-md shadow-md resize-none p-3" />
           </div>
         </div>
         <div className="flex justify-end space-x-4">

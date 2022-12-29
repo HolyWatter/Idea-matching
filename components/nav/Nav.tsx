@@ -40,7 +40,7 @@ export default function Nav() {
   };
 
   return (
-    <div className="fix top-0 flex py-5 border-b justify-between items-center bg-white sm-m:justify-center z-20">
+    <div className="w-full fixed top-0 flex py-5 border-b justify-between items-center bg-white sm-m:justify-center z-20">
       <div className="flex items-center space-x-6">
         <div onClick={clickLogo} className="ml-10 text-3xl font-bold">
           Logo
