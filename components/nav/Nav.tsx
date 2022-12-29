@@ -30,10 +30,13 @@ export default function Nav() {
     router.push("/");
   };
   const clickResister = () => {
-    router.push("/idea");
+    router.push("/register");
   };
   const clickLookUp = () => {
     router.push("/lookup");
+  };
+  const clickList = () => {
+    router.push("/list");
   };
   const clickMenuBar = () => {
     setIsUserModal((prev) => !prev);
@@ -41,16 +44,17 @@ export default function Nav() {
 
   return (
     <div className="w-full fixed top-0 flex py-5 border-b justify-between items-center bg-white sm-m:justify-center z-20">
-      <div className="flex items-center space-x-6">
+      <div className="flex items-center space-x-3">
         <div onClick={clickLogo} className="ml-10 text-3xl font-bold">
           Logo
         </div>
         <div className="font-semibold space-x-4 md-m:hidden">
           <button onClick={clickResister}>아이디어 등록</button>
           <button onClick={clickLookUp}>아이디어 찾기</button>
+          <button onClick={clickList}>아이디어 목록</button>
         </div>
       </div>
-      <div className="flex items-center space-x-5 mr-6 sm-m:hidden">
+      <div className="flex items-center space-x-3 mr-6 sm-m:hidden">
         <input
           onChange={inputKeyWord}
           className="pl-3 focus:outline-none border w-52 h-8 rounded-full text-sm focus:border-gray-600 md-m:hidden"
@@ -74,7 +78,7 @@ export default function Nav() {
             ></path>
           </svg>
         ) : (
-          <div className="space-x-2">
+          <div className="space-x-1">
             <button
               onClick={clickLogin}
               className="w-20 h-10 rounded-md text-white bg-gray-500 border shadow-md"
