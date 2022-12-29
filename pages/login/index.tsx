@@ -61,7 +61,7 @@ export default function Login() {
             <p>비밀번호</p>
             <Input
               onChange={handleInput}
-              placeholder="이메일을 입력하세요"
+              placeholder="비밀번호를 입력하세요"
               type="password"
               value={loginInfo.password}
               name="password"

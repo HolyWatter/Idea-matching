@@ -6,7 +6,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Nav />
-      <div className="min-w-5xl">
+      <div className="min-w-5xl h-screen bg-bg pt-28">
         <Component {...pageProps} />
       </div>
     </>
