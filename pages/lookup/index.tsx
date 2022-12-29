@@ -1,8 +1,5 @@
 import IdeaComponent from "../../components/IdeaComponent/IdeaComponent";
 
-export default function IdeaAdd(){
-
-  return(
-    <IdeaComponent />
-  )
+export default function IdeaLookUp() {
+  return <IdeaComponent />;
 }
