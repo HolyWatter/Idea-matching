@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { Input } from "../../components/BtnInput/Input";
+import { API } from "../config";
 
 interface Info {
   email: string;
   password: string;
-  name: string;
+  username: string;
   nickname: string;
 }
 
@@ -14,9 +15,10 @@ export default function SignUp() {
   const [signUpInfo, setSignUpInfo] = useState<Info>({
     email: "",
     password: "",
-    name: "",
+    username: "",
     nickname: "",
   });
+
   const router = useRouter();
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,13 +30,13 @@ export default function SignUp() {
   };
 
   async function postUser() {
-    await axios.post("", { signUpInfo });
     try {
+      await axios.post(API.signup, signUpInfo);
       alert("회원가입에 성공했습니다.");
-      router.push("/");
-    } catch {
-      //FIXME 코드별 예외처리가 필요
-      alert("서버와의 통신이 원활하지 않습니다.");
+      router.push("/login");
+    } catch (error : any) {
+      console.log(error.response)
+      alert(ERROR_MESSAGE_SIGNUP[error.response.data.message]);
     }
   }
 
@@ -43,9 +45,9 @@ export default function SignUp() {
     postUser();
   };
 
-  const clickToLoginBtn = ()=>{
-    router.push('/login')
-  }
+  const clickToLoginBtn = () => {
+    router.push("/login");
+  };
 
   return (
     <div className="flex flex-col items-center m-auto">
@@ -82,8 +84,8 @@ export default function SignUp() {
               onChange={handleInput}
               placeholder="홍길동"
               type="text"
-              value={signUpInfo.name}
-              name="name"
+              value={signUpInfo.username}
+              name="username"
             />
           </div>
           <div className="space-y-2">
@@ -110,3 +112,9 @@ export default function SignUp() {
     </div>
   );
 }
+
+const ERROR_MESSAGE_SIGNUP: { [key: string]: string } = {
+  "conflict email": "이미 가입된 메일입니다.",
+  "conflict nickname": "이미 가입된 닉네임입니다.",
+  "Invalid password" : "비밀번호를 영어, 숫자, 특수문자 8자리 이상으로 작성해주세요"
+};
