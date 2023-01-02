@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import axios from "axios";
 import { Input } from "../../components/BtnInput/Input";
+import { API } from "../config";
 
 interface LoginInfo {
   email: string;
@@ -27,18 +28,18 @@ export default function Login() {
     router.push("/signup");
   };
   async function postLogin() {
-    await axios.post("", {
-      loginInfo,
-    });
     try {
+      await axios.post(API.login, loginInfo);
       alert("로그인되었습니다.");
       router.push("/");
     } catch {
       alert("로그인정보를 확인해주세요");
     }
   }
+
   const clickSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    postLogin();
   };
   return (
     <div className="flex flex-col items-center">
