@@ -17,7 +17,7 @@ module.exports = {
       "2xl-m": { max: "1535px" },
       "xl-m": { max: "1279px" },
       "lg-m": { max: "1023px" },
-      "md-m": { max: "767px" },
+      "md-m": { max: "883px" },
       "sm-m": { max: "639px" },
       sm: "640px",
       md: "768px",
