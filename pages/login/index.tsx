@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import axios from "axios";
 import { Input } from "../../components/BtnInput/Input";
-import { API } from "../config";
+import { API } from "../../config";
 
 interface LoginInfo {
   email: string;

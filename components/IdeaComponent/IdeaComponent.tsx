@@ -68,7 +68,10 @@ export default function IdeaComponent({
         <div className="border-t" />
         <div className="flex flex-col items-center w-full mt-10 text-sm space-y-6">
           {asideContentArr.map((items) => (
-            <p key={items.id} className="text-center w-[90%] py-2 border rounded-full">
+            <p
+              key={items.id}
+              className="text-center w-[90%] py-2 border rounded-full"
+            >
               {items.text}
             </p>
           ))}
