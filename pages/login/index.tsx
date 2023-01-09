@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import axios from "axios";
 import { Input } from "../../components/BtnInput/Input";
-import { API } from "../config";
+import { API } from "../../config";
 
 interface LoginInfo {
   email: string;
@@ -29,11 +29,12 @@ export default function Login() {
   };
   async function postLogin() {
     try {
-      await axios.post(API.login, loginInfo);
+      const response = await axios.post(API.login, loginInfo);
+      localStorage.setItem("token", response.data.accessToken);
       alert("로그인되었습니다.");
       router.push("/");
-    } catch {
-      alert("로그인정보를 확인해주세요");
+    } catch (error: any) {
+      alert(ERROR_MESSAGE_LOGIN[error.response.data.message]);
     }
   }
 
@@ -85,3 +86,9 @@ export default function Login() {
     </div>
   );
 }
+
+const ERROR_MESSAGE_LOGIN: {
+  [key: string]: string;
+} = {
+  "login failed": "로그인 정보를 다시 확인해주세요.",
+};
