@@ -3,6 +3,8 @@ import { useState } from "react";
 import axios from "axios";
 import { Input } from "../../components/BtnInput/Input";
 import { API } from "../../config";
+import { useSetRecoilState } from "recoil";
+import { loginState } from "../../components/State/Atom";
 
 interface LoginInfo {
   email: string;
@@ -14,7 +16,7 @@ export default function Login() {
     email: "",
     password: "",
   });
-
+  const setLoginStatus = useSetRecoilState(loginState);
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setLoginInfo({
@@ -31,6 +33,7 @@ export default function Login() {
     try {
       const response = await axios.post(API.login, loginInfo);
       localStorage.setItem("token", response.data.accessToken);
+      setLoginStatus(true);
       alert("로그인되었습니다.");
       router.push("/");
     } catch (error: any) {

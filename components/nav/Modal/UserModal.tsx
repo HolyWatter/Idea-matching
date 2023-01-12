@@ -1,13 +1,15 @@
 import { FC, Dispatch, SetStateAction } from "react";
 import { useRouter } from "next/router";
+import { useSetRecoilState } from "recoil";
+import { loginState } from "../../State/Atom";
 
 interface Props {
-  setIsToken: Dispatch<SetStateAction<boolean>>;
   setIsUserModal: Dispatch<SetStateAction<boolean>>;
 }
 
-export const UserModal: FC<Props> = ({ setIsToken, setIsUserModal }) => {
+export const UserModal: FC<Props> = ({ setIsUserModal }) => {
   const router = useRouter();
+  const setLoginStatus = useSetRecoilState(loginState);
   const clickUserInfo = () => {
     setIsUserModal((prev) => !prev);
     router.push("/userinfo");
@@ -19,7 +21,6 @@ export const UserModal: FC<Props> = ({ setIsToken, setIsUserModal }) => {
   const clickLogout = () => {
     localStorage.removeItem("token");
     setIsUserModal((prev) => !prev);
-    setIsToken(false);
     router.push("/");
   };
   return (

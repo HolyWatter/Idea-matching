@@ -6,13 +6,18 @@ interface Props {
 
 export default function CategoryModal({ setIsCategoryModal }: Props) {
   const selectCategory = () => {
-    setIsCategoryModal(prev=> !prev)
+    setIsCategoryModal((prev) => !prev);
   };
 
   return (
     <div className="flex-col w-[200px] items-start px-2 flex justify-center border rounded-md bg-white">
       {CATEGORY.map((item) => (
-        <button key={item.id} className="h-10 flex items-center p-2" onClick={selectCategory}>
+        <button
+          key={item.id} 
+          value={item.id}
+          className="h-10 flex items-center p-2"
+          onClick={selectCategory}
+        >
           <p>{item.categoryName}</p>
         </button>
       ))}
@@ -21,6 +26,6 @@ export default function CategoryModal({ setIsCategoryModal }: Props) {
 }
 
 const CATEGORY = [
-  { id: 1, categoryName: "개발" },
-  { id: 2, categoryName: "그 외" },
+  { id: 1, categoryName: "웹 개발" },
+  { id: 2, categoryName: "앱 개발" },
 ];
