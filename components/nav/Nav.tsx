@@ -1,21 +1,16 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../State/Atom";
 import { UserModal } from "./Modal/UserModal";
 
 export default function Nav() {
-  const [isToken, setIsToken] = useState<boolean>(false);
+  const loginStatus = useRecoilValue(loginState);
   const [isUserModal, setIsUserModal] = useState<boolean>(false);
   const [keyWord, setKeyWord] = useState<string>("");
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setIsToken(true);
-    } else {
-      setIsToken(false);
-    }
-  }, [isToken]);
-
+  console.log(loginStatus)
   const router = useRouter();
+
   const inputKeyWord = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyWord(e.target.value);
   };
@@ -23,7 +18,6 @@ export default function Nav() {
     router.push("/signup");
   };
   const clickLogin = () => {
-    setIsToken(true);
     router.push("/login");
   };
   const clickLogo = () => {
@@ -31,9 +25,6 @@ export default function Nav() {
   };
   const clickResister = () => {
     router.push("/register");
-  };
-  const clickLookUp = () => {
-    router.push("/lookup");
   };
   const clickList = () => {
     router.push("/list");
@@ -50,7 +41,6 @@ export default function Nav() {
         </div>
         <div className="font-semibold space-x-4 md-m:hidden">
           <button onClick={clickResister}>아이디어 등록</button>
-          <button onClick={clickLookUp}>아이디어 찾기</button>
           <button onClick={clickList}>아이디어 목록</button>
         </div>
       </div>
@@ -61,7 +51,7 @@ export default function Nav() {
           placeholder="검색"
           value={keyWord}
         />
-        {isToken ? (
+        {loginStatus ? (
           <svg
             onClick={clickMenuBar}
             className="w-8 h-8"
@@ -95,7 +85,7 @@ export default function Nav() {
         )}
       </div>
       {isUserModal && (
-        <UserModal setIsToken={setIsToken} setIsUserModal={setIsUserModal} />
+        <UserModal setIsUserModal={setIsUserModal} />
       )}
     </div>
   );
