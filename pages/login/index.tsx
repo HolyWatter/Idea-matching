@@ -3,13 +3,9 @@ import { useState } from "react";
 import axios from "axios";
 import { Input } from "../../components/BtnInput/Input";
 import { API } from "../../config";
-import { useSetRecoilState } from "recoil";
-import { loginState } from "../../components/State/Atom";
-
-interface LoginInfo {
-  email: string;
-  password: string;
-}
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { loginState, userNickName } from "../../components/State/Atom";
+import { LoginInfo } from "../../components/State/interface";
 
 export default function Login() {
   const [loginInfo, setLoginInfo] = useState<LoginInfo>({
@@ -17,6 +13,8 @@ export default function Login() {
     password: "",
   });
   const setLoginStatus = useSetRecoilState(loginState);
+  const setNickName = useSetRecoilState(userNickName);
+  const nickname = useRecoilValue(userNickName);
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setLoginInfo({
@@ -32,8 +30,9 @@ export default function Login() {
   async function postLogin() {
     try {
       const response = await axios.post(API.login, loginInfo);
-      localStorage.setItem("token", response.data.accessToken);
+      localStorage.setItem("token", response.data.data.accessToken);
       setLoginStatus(true);
+      setNickName(response.data.nickname);
       alert("로그인되었습니다.");
       router.push("/");
     } catch (error: any) {
@@ -49,7 +48,7 @@ export default function Login() {
     <div className="flex flex-col items-center">
       <p className="my-12 text-7xl font-bold text-gray-800">000</p>
       <p className="text-gray-700">000은 아이디어 공유플랫폼입니다.</p>
-      <p className="text-gray-400 py-8">로그인 정보를 입력해주세요</p>
+      <p className="py-8 text-gray-400">로그인 정보를 입력해주세요</p>
       <form>
         <div className="space-y-4">
           <div className="space-y-2">
@@ -75,12 +74,12 @@ export default function Login() {
         </div>
         <button
           onClick={clickSubmit}
-          className="w-96 h-12 mt-12 rounded-full border text-white bg-origin shadow-md "
+          className="mt-12 h-12 w-96 rounded-full border bg-origin text-white shadow-md "
         >
           로그인
         </button>
       </form>
-      <div className="my-4 space-x-5 flex">
+      <div className="my-4 flex space-x-5">
         <p>아직 회원이 아니신가요?</p>
         <button onClick={clickSignUpBtn} className="text-blue-400 underline">
           회원가입

@@ -18,7 +18,7 @@ export const Input: FC<Props> = ({
   return (
     <input
       onChange={onChange}
-      className="w-96 h-12 border rounded-md pl-3 shadow-md focus:outline-none focus:border-origin focus:border-2"
+      className="h-12 w-96 rounded-md border pl-3 shadow-md focus:border-2 focus:border-origin focus:outline-none"
       placeholder={placeholder}
       type={type}
       value={value}
