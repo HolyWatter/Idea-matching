@@ -1,22 +1,32 @@
 import Link from "next/link";
 
-interface User {
-  userId: number;
-  userNickname: string;
-}
 interface Tags {
-  tag: string;
-  id: number;
+  id :number;
+  title : string;
 }
+
+interface Img{
+  id : number ;
+  title : string;
+}
+
+interface User{
+  id : number ;
+  username : string;
+}
+
 interface IdeaList {
   id: number;
   title: string;
   user: User;
   tags: Tags[];
-  countLike: number;
+  description : string;
+  postingLikesCount: number;
   countComments: number;
   isLike: boolean;
   seen: number;
+  postingImage :  Img[];
+  views : number;
 }
 
 interface Props {
@@ -29,10 +39,10 @@ export default function Idea({ idea }: Props) {
       <div className="flex justify-between py-3 border-b">
         <div>
           <p className="pl-2 text-lg text-gray-800">{idea.title}</p>
-          <p className="pl-2 text-sm text-gray-400">{idea.user.userNickname}</p>
+          <p className="pl-2 text-sm text-gray-400">{idea.user.username}</p>
           <div className="mt-2 flex text-xs space-x-2">
             {idea.tags.map((tag) => 
-              <p key={tag.id} className="bg-blue-100 text-gray-600 border rounded-full px-3">{tag.tag}</p>
+              <p key={tag.id} className="bg-blue-100 text-gray-600 border rounded-full px-3">{tag.title}</p>
             )}
           </div>
         </div>
@@ -52,7 +62,7 @@ export default function Idea({ idea }: Props) {
                 d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
               />
             </svg>
-            <p>{idea.countLike}</p>
+            <p>{idea.postingLikesCount}</p>
           </div>
           <div className="flex space-x-2 items-center">
             <svg
