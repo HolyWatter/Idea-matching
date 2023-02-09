@@ -2,14 +2,19 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Idea from "../../components/IdeaComponent/Idea";
 
-interface User {
-  userId: number;
-  userNickname: string;
-}
-
 interface Tags {
   id :number;
-  tag : string;
+  title : string;
+}
+
+interface Img{
+  id : number ;
+  title : string;
+}
+
+interface User{
+  id : number ;
+  username : string;
 }
 
 interface IdeaList {
@@ -17,10 +22,13 @@ interface IdeaList {
   title: string;
   user: User;
   tags: Tags[];
-  countLike: number;
+  description : string;
+  postingLikesCount: number;
   countComments: number;
   isLike: boolean;
   seen: number;
+  postingImage :  Img[];
+  views : number;
 }
 
 export default function IdeaList() {
@@ -32,13 +40,16 @@ export default function IdeaList() {
 
   const getData = async () => {
     const data = await axios({
-      url: "/data/IDEA_LIST.json",
+      url: "http://10.58.52.205:3000/posting/all?orderBy=b",
     });
-    setIdeaList(data.data);
+    setIdeaList(data.data)
   };
 
+  console.log(ideaList)
+  
+
   return (
-    <div className="flex justify-center items-start space-x-20">
+    <div className="flex justify-center items-start space-x-20 pb-20">
       <div className="space-y-10">
         <div className="w-[160px]">
           <p>카테고리</p>
