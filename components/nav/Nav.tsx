@@ -1,19 +1,22 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { loginState } from "../State/Atom";
 import { UserModal } from "./Modal/UserModal";
 
 export default function Nav() {
+  const setLoginStatus = useSetRecoilState(loginState);
   const loginStatus = useRecoilValue(loginState);
   const [isUserModal, setIsUserModal] = useState<boolean>(false);
-  const [keyWord, setKeyWord] = useState<string>("");
-  console.log(loginStatus)
   const router = useRouter();
 
-  const inputKeyWord = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setKeyWord(e.target.value);
-  };
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setLoginStatus(true);
+    } else {
+      setLoginStatus(false);
+    }
+  }, []);
   const clickSignUp = () => {
     router.push("/signup");
   };
@@ -34,27 +37,21 @@ export default function Nav() {
   };
 
   return (
-    <div className="w-full fixed top-0 flex py-5 border-b justify-between items-center bg-white sm-m:justify-center z-20">
+    <div className="fixed top-0 z-20 flex w-full items-center justify-between border-b bg-white py-5 sm-m:justify-center">
       <div className="flex items-center space-x-3">
-        <div onClick={clickLogo} className="ml-10 text-3xl font-bold">
+        <div onClick={clickLogo} className="ml-10 text-3xl font-bold sm-m:ml-0">
           Logo
         </div>
-        <div className="font-semibold space-x-4 md-m:hidden">
+        <div className="space-x-4 font-semibold sm-m:hidden">
           <button onClick={clickResister}>아이디어 등록</button>
           <button onClick={clickList}>아이디어 목록</button>
         </div>
       </div>
-      <div className="flex items-center space-x-3 mr-6 sm-m:hidden">
-        <input
-          onChange={inputKeyWord}
-          className="pl-3 focus:outline-none border w-52 h-8 rounded-full text-sm focus:border-gray-600 md-m:hidden"
-          placeholder="검색"
-          value={keyWord}
-        />
+      <div className="mr-6 flex items-center space-x-3 sm-m:hidden">
         {loginStatus ? (
           <svg
             onClick={clickMenuBar}
-            className="w-8 h-8"
+            className="h-8 w-8"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -71,22 +68,20 @@ export default function Nav() {
           <div className="space-x-1">
             <button
               onClick={clickLogin}
-              className="w-20 h-10 rounded-md text-white bg-gray-500 border shadow-md"
+              className="h-10 w-20 rounded-md border bg-gray-500 text-white shadow-md"
             >
               로그인
             </button>
             <button
               onClick={clickSignUp}
-              className="w-20 h-10 rounded-md text-white bg-origin border shadow-md"
+              className="h-10 w-20 rounded-md border bg-origin text-white shadow-md"
             >
               회원가입
             </button>
           </div>
         )}
       </div>
-      {isUserModal && (
-        <UserModal setIsUserModal={setIsUserModal} />
-      )}
+      {isUserModal && <UserModal setIsUserModal={setIsUserModal} />}
     </div>
   );
 }

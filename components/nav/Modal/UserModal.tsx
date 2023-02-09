@@ -20,14 +20,15 @@ export const UserModal: FC<Props> = ({ setIsUserModal }) => {
   };
   const clickLogout = () => {
     localStorage.removeItem("token");
+    setLoginStatus(false);
     setIsUserModal((prev) => !prev);
     router.push("/");
   };
   return (
-    <div className="w-40 p-3 border rounded-sm bg-white absolute right-3 top-[76px] z-30 text-xl space-y-5">
+    <div className="absolute right-3 top-[76px] z-30 w-40 space-y-5 rounded-sm border bg-white p-3 text-xl">
       <button onClick={clickUserInfo} className="flex items-center space-x-4">
         <svg
-          className="w-6 h-6"
+          className="h-6 w-6"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -47,7 +48,7 @@ export const UserModal: FC<Props> = ({ setIsUserModal }) => {
         className="flex items-center space-x-4"
       >
         <svg
-          className="w-6 h-6"
+          className="h-6 w-6"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -64,7 +65,7 @@ export const UserModal: FC<Props> = ({ setIsUserModal }) => {
       </button>
       <button onClick={clickLogout} className="flex items-center space-x-4">
         <svg
-          className="w-6 h-6"
+          className="h-6 w-6"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
