@@ -1,8 +1,6 @@
 import axios from "axios";
 import { API } from "../../config";
-import { LoginInfo } from "./interface";
 import { IdeaList, Comments } from "./interface";
-import { IdeaListType } from "./interface";
 
 export const getIdeaList = (query: string) => {
   if (localStorage.getItem("token")) {

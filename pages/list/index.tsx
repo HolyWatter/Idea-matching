@@ -1,12 +1,8 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useState } from "react";
 import Category from "../../components/Category";
 import Idea from "../../components/IdeaComponent/Idea";
 import ListSortingModal from "../../components/ListSortingModal";
-import { loginState } from "../../components/State/Atom";
-import { API } from "../../config";
-import { IdeaInfo, IdeaList } from "../../components/State/interface";
+import { IdeaList } from "../../components/State/interface";
 import { useQuery } from "react-query";
 import { getIdeaList } from "../../components/State/ApiFunction";
 
