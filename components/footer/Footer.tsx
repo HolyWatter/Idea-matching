@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import React from "react";
 import { useRecoilValue } from "recoil";
 import { loginState } from "../State/Atom";
 
@@ -54,7 +55,7 @@ export default function Footer() {
       </button>
       <button
         className="flex flex-col items-center"
-        value="register"
+        value="postidea"
         onClick={clickMoveBtn}
       >
         <svg
@@ -95,7 +96,11 @@ export default function Footer() {
         <p className="text-sm text-gray-400">마이페이지</p>
       </button>
       {loginStatus ? (
-        <button className="flex flex-col items-center">
+        <button
+          onClick={clickMoveBtn}
+          value="/"
+          className="flex flex-col items-center"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -113,7 +118,11 @@ export default function Footer() {
           <p className="text-sm text-gray-400">로그아웃</p>
         </button>
       ) : (
-        <button className="flex flex-col items-center">
+        <button
+          onClick={clickMoveBtn}
+          value="/login"
+          className="flex flex-col items-center"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

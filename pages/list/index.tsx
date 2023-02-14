@@ -6,7 +6,9 @@ import Idea from "../../components/IdeaComponent/Idea";
 import ListSortingModal from "../../components/ListSortingModal";
 import { loginState } from "../../components/State/Atom";
 import { API } from "../../config";
-import { IdeaList } from "../../components/State/interface";
+import { IdeaInfo, IdeaList } from "../../components/State/interface";
+import { useQuery } from "react-query";
+import { getIdeaList } from "../../components/State/ApiFunction";
 
 export default function List() {
   const [ideaList, setIdeaList] = useState<IdeaList[] | null>(null);
@@ -18,26 +20,15 @@ export default function List() {
     text: "최신순",
     query: "created",
   });
-  const loginStatus = useRecoilValue(loginState);
 
-  useEffect(() => {
-    getData();
-  }, [sortingValue.query]);
-
-  const getData = async () => {
-    if (loginState) {
-      const data = await axios({
-        url: `${API.basic}/posting/all?orderBy=${sortingValue.query}`,
-        headers: { Authorization: localStorage.getItem("token") },
-      });
-      setIdeaList(data.data);
-    } else {
-      const data = await axios({
-        url: `${API.basic}/posting/all?orderBy=${sortingValue.query}`,
-      });
-      setIdeaList(data.data);
+  const {data, isFetched} = useQuery(
+    ["list", sortingValue.query ], 
+    () => getIdeaList(sortingValue.query),{
+      refetchOnWindowFocus: false
     }
-  };
+  );
+
+
 
   const clickSortingTab = () => {
     setisSortingTab((prev) => !prev);
@@ -64,8 +55,12 @@ export default function List() {
           )}
         </div>
         <div>
-          {ideaList &&
-            ideaList?.map((idea) => <Idea key={idea.id} idea={idea} />)}
+          {
+            isFetched &&
+            data?.data.map((idea: IdeaList) => (
+              <Idea key={idea.id} idea={idea} />
+            ))
+          }
         </div>
       </div>
     </div>

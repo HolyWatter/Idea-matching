@@ -1,17 +1,18 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { API } from "../../config";
 import { userNickName } from "../State/Atom";
 import ReplyComponent from "./ReplyComponent";
 import { Comments } from "../State/interface";
+import { useMutation, useQueryClient } from "react-query";
+import { likeApi, postReply } from "../State/ApiFunction";
 
 interface Props {
   comment: Comments;
 }
 
 //댓글 수정 comments/update/:commnetid
-
 //대댓글 수정 replies/update/:replyid
 //대댓글 삭제 replies/delete/:replyid
 
@@ -29,16 +30,17 @@ export default function Comment({ comment }: Props) {
       comment.userComment.filter((item) => item.user.nickname === nickname)
     );
   }, []);
-  const postReply = async (e: React.FormEvent<HTMLFormElement>) => {
+  const queryClient = useQueryClient();
+  const postReplyMutation = useMutation(
+    () => postReply(comment.id, replyText),
+    {
+      onSuccess: () => queryClient.invalidateQueries(),
+    }
+  );
+
+  const submitReply = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    axios.post(
-      `${API.basic}/replies/create`,
-      {
-        comment: comment.id,
-        description: replyText,
-      },
-      { headers: { Authorization: localStorage.getItem("token") } }
-    );
+    postReplyMutation.mutate();
   };
 
   const date = new Date(comment.createdAt);
@@ -51,13 +53,15 @@ export default function Comment({ comment }: Props) {
     setReplyText(e.target.value);
   };
 
+  const likeCommentMutation = useMutation(() => likeApi(comment.id), {
+    onSuccess: () => queryClient.invalidateQueries(),
+  });
+
   const clickLike = () => {
-    axios.post(
-      `${API.basic}/comments/like/${comment.id}`,
-      {},
-      { headers: { Authorization: localStorage.getItem("token") } }
-    );
+    likeCommentMutation.mutate;
   };
+
+  console.log(comment)
 
   return (
     <div className="space-y-4 py-3">
@@ -104,7 +108,7 @@ export default function Comment({ comment }: Props) {
           </button>
         </div>
       </div>
-      <form onSubmit={postReply} className="flex w-full justify-between">
+      <form onSubmit={submitReply} className="flex w-full justify-between">
         <input
           placeholder=" 댓글을 입력하세요"
           className="w-[90%] border-b bg-bg focus:outline-none"

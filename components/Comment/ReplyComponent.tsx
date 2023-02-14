@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { useRecoilValue } from "recoil";
-import { API } from "../../config";
+import { likeReply } from "../State/ApiFunction";
 import { userNickName } from "../State/Atom";
 import { Reply, UserLike } from "../State/interface";
 
@@ -23,15 +24,12 @@ export default function ReplyComponent({ reply }: Props) {
     dateStyle: "medium",
     timeStyle: "short",
   }).format(date);
+  const queryClient = useQueryClient();
 
-  console.log(reply);
-  const likeReply = () => {
-    axios.post(
-      `${API.basic}/replies/like/${reply.id}`,
-      {},
-      { headers: { Authorization: localStorage.getItem("token") } }
-    );
-  };
+  const likeReplyMutation = useMutation(()=>
+    likeReply(reply.id) ,{
+      onSuccess : () => queryClient.invalidateQueries()
+    });
 
   return (
     <div className="flex items-center justify-between">
@@ -42,7 +40,7 @@ export default function ReplyComponent({ reply }: Props) {
         </div>
         <p>{reply.description}</p>
       </div>
-      <button onClick={likeReply}>
+      <button onClick={()=> likeReplyMutation.mutate()}>
         <svg
           className="h-5 w-5"
           fill={currentUserLike.length === 1 ? "#EA5856" : "none"}

@@ -6,6 +6,7 @@ import { API } from "../../config";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { loginState, userNickName } from "../../components/State/Atom";
 import { LoginInfo } from "../../components/State/interface";
+import { useMutation } from "react-query";
 
 export default function Login() {
   const [loginInfo, setLoginInfo] = useState<LoginInfo>({
@@ -13,8 +14,7 @@ export default function Login() {
     password: "",
   });
   const setLoginStatus = useSetRecoilState(loginState);
-  const setNickName = useSetRecoilState(userNickName);
-  const nickname = useRecoilValue(userNickName);
+
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setLoginInfo({
@@ -27,12 +27,12 @@ export default function Login() {
   const clickSignUpBtn = () => {
     router.push("/signup");
   };
+  
   async function postLogin() {
     try {
       const response = await axios.post(API.login, loginInfo);
       localStorage.setItem("token", response.data.data.accessToken);
       setLoginStatus(true);
-      setNickName(response.data.nickname);
       alert("로그인되었습니다.");
       router.push("/");
     } catch (error: any) {

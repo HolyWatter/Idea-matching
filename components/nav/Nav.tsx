@@ -27,7 +27,7 @@ export default function Nav() {
     router.push("/");
   };
   const clickResister = () => {
-    router.push("/register");
+    router.push("/postidea");
   };
   const clickList = () => {
     router.push("/list");
