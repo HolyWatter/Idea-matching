@@ -15,7 +15,7 @@ export default function ReplyComponent({ reply }: Props) {
   const [currentUserLike, setCurrentUserLike] = useState<UserLike[]>([]);
   useEffect(() => {
     setCurrentUserLike(
-      reply.userReply.filter((item) => item.user.nickname === "박성수")
+      reply.userReply.filter((item) => item.user.nickname === "")
     );
   }, []);
 

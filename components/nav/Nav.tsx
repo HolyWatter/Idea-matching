@@ -17,6 +17,7 @@ export default function Nav() {
       setLoginStatus(false);
     }
   }, []);
+
   const clickSignUp = () => {
     router.push("/signup");
   };

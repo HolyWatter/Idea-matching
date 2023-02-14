@@ -1,7 +1,5 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { API } from "../../config";
 import { userNickName } from "../State/Atom";
 import ReplyComponent from "./ReplyComponent";
 import { Comments } from "../State/interface";
@@ -11,10 +9,6 @@ import { likeApi, postReply } from "../State/ApiFunction";
 interface Props {
   comment: Comments;
 }
-
-//댓글 수정 comments/update/:commnetid
-//대댓글 수정 replies/update/:replyid
-//대댓글 삭제 replies/delete/:replyid
 
 interface UserLike {
   id: number;
@@ -60,8 +54,6 @@ export default function Comment({ comment }: Props) {
   const clickLike = () => {
     likeCommentMutation.mutate;
   };
-
-  console.log(comment)
 
   return (
     <div className="space-y-4 py-3">
@@ -125,20 +117,3 @@ export default function Comment({ comment }: Props) {
     </div>
   );
 }
-
-// const COMMENT = {
-//   createReply: axios.post(`${API.basic}/replies/create`, {
-//     headers: { Authorization: localStorage.getItem("token") },
-//     body: {},
-//   }),
-//   deleteComment: axios.delete(`${API.basic}/comments/delete/${e.currentTarget.value}`, {
-//     headers: { Authorization: localStorage.getItem("token") },
-//   }),
-//   likeComment: axios.post(`${API.basic}/comments/like/${e.currentTarget.value}`, {
-//     headers: { Authorization: localStorage.getItem("token") },
-//     body: {},
-//   }),
-//   likeReply: axios.post(`${API.basic}/replies/like/${e.currentTarget.value}`, {
-//     headers: { Authorization: localStorage.getItem("token") },
-//   }),
-// };

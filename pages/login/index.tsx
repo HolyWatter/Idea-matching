@@ -3,10 +3,9 @@ import { useState } from "react";
 import axios from "axios";
 import { Input } from "../../components/BtnInput/Input";
 import { API } from "../../config";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { loginState, userNickName } from "../../components/State/Atom";
+import { useSetRecoilState } from "recoil";
+import { loginState } from "../../components/State/Atom";
 import { LoginInfo } from "../../components/State/interface";
-import { useMutation } from "react-query";
 
 export default function Login() {
   const [loginInfo, setLoginInfo] = useState<LoginInfo>({

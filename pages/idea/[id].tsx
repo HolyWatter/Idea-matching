@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import Category from "../../components/Category";
 import Image from "next/image";
@@ -10,8 +9,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Navigation, Pagination } from "swiper";
 import Comment from "../../components/Comment/Comment";
-import { IdeaList, Comments } from "../../components/State/interface";
-import { useMutation, useQueries, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   getComments,
   getIdeaDetail,
@@ -72,7 +70,6 @@ export default function Idea() {
     setCommentText(e.target.value);
   };
 
-    console.log(commentText)
   return (
     <div className="flex items-start justify-center pb-20 md-m:px-10 md:px-20">
       <Category />
