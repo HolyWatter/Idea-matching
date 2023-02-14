@@ -22,6 +22,9 @@ export interface UserLike {
   };
 }
 
+export interface IdeaListType {
+  data:IdeaList
+}
 export interface IdeaList {
   id: number;
   createdAt: string;

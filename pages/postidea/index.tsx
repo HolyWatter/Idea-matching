@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
 import axios from "axios";
-import { Input } from "../../components/BtnInput/Input";
 import { API } from "../../config";
 import CategoryModal from "../../components/IdeaComponent/CategoryModal";
 import { useRouter } from "next/router";
