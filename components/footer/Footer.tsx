@@ -10,7 +10,7 @@ export default function Footer() {
     router.push(`/${e.currentTarget.value}`);
   };
   return (
-    <div className="fixed bottom-0 flex w-full min-w-[480px] justify-around border bg-white py-5 px-10 shadow-md sm:hidden">
+    <div className="fixed bottom-0 flex w-full justify-around border bg-white py-5 px-10 shadow-md sm:hidden">
       <button
         className="flex flex-col items-center"
         value="/"

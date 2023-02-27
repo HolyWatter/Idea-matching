@@ -11,7 +11,6 @@ const queryClient = new QueryClient();
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
       <RecoilRoot>
         <Nav />
         <div className="min-w-5xl min-h-screen bg-bg pt-28">
